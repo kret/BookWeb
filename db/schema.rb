@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110409164350) do
+ActiveRecord::Schema.define(:version => 20110409181513) do
+
+  create_table "contributions", :force => true do |t|
+    t.string   "role"
+    t.integer  "contributable_id"
+    t.string   "contributable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "editions", :force => true do |t|
     t.string   "title"

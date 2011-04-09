@@ -1,0 +1,2 @@
+class EditionContribution < Contribution
+end

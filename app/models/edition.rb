@@ -8,4 +8,5 @@ class Edition < ActiveRecord::Base
   validates :language,      :presence => true
 
   belongs_to :publication
+  has_many :contributions, :as => :contributable, :dependent => :destroy
 end

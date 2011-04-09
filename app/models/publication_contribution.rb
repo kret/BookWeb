@@ -1,0 +1,2 @@
+class PublicationContribution < Contribution
+end

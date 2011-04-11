@@ -1,7 +1,8 @@
 class CreateContributions < ActiveRecord::Migration
   def self.up
     create_table :contributions do |t|
-      t.string :role
+      t.integer :role
+      t.references :person
       t.references :contributable, :polymorphic => true
 
       t.timestamps

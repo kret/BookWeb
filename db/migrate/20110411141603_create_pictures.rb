@@ -6,11 +6,11 @@ class CreatePictures < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_column :editions, :cover, :string
+    add_column :editions, :cover_id, :integer
   end
 
   def self.down
     drop_table :pictures
-    remove_column :editions, :cover
+    remove_column :editions, :cover_id
   end
 end

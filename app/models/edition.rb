@@ -9,6 +9,6 @@ class Edition < ActiveRecord::Base
 
   belongs_to :publication
   has_many :contributions, :as => :contributable, :dependent => :destroy
-  has_one :cover, :class_name => "Picture", :dependent => :destroy
+  has_one :cover, :class_name => "Picture", :foreign_key => "cover_id", :dependent => :destroy
   has_many :pictures, :dependent => :destroy
 end

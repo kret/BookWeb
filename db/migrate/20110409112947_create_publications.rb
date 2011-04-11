@@ -3,7 +3,6 @@ class CreatePublications < ActiveRecord::Migration
     create_table :publications do |t|
       t.string :title
       t.text :description
-      t.string :author
 
       t.timestamps
     end

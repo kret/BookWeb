@@ -13,7 +13,8 @@
 ActiveRecord::Schema.define(:version => 20110411141603) do
 
   create_table "contributions", :force => true do |t|
-    t.string   "role"
+    t.integer  "role"
+    t.integer  "person_id"
     t.integer  "contributable_id"
     t.string   "contributable_type"
     t.datetime "created_at"
@@ -33,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20110411141603) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
-    t.string   "cover"
+    t.integer  "cover_id"
   end
 
   create_table "people", :force => true do |t|
@@ -54,7 +55,6 @@ ActiveRecord::Schema.define(:version => 20110411141603) do
 
   create_table "publications", :force => true do |t|
     t.string   "title"
-    t.string   "author"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

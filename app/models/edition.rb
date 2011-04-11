@@ -8,7 +8,16 @@ class Edition < ActiveRecord::Base
   validates :language,      :presence => true
 
   belongs_to :publication
-  has_many :contributions, :as => :contributable, :dependent => :destroy
-  has_one :cover, :class_name => "Picture", :foreign_key => "cover_id", :dependent => :destroy
-  has_many :pictures, :dependent => :destroy
+  has_many :contributions,  :as => :contributable,
+                            :dependent => :destroy
+  has_many :translators,    :through => :contributions,
+                            :class_name => "Person",
+                            :conditions => "contributions.role = 2"
+  has_many :illustrators,   :through => :contributions,
+                            :class_name => "Person",
+                            :conditions => "contributions.role = 3"
+  has_one :cover,           :class_name => "Picture",
+                            :foreign_key => "cover_id",
+                            :dependent => :destroy
+  has_many :pictures,       :dependent => :destroy
 end

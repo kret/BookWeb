@@ -7,6 +7,7 @@ gem 'carrierwave'
 
 group :development do
   gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'annotate'
 end
 
 group :development, :test do

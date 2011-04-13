@@ -10,10 +10,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110411141603) do
+ActiveRecord::Schema.define(:version => 20110413212932) do
 
   create_table "contributions", :force => true do |t|
-    t.integer  "role"
+    t.integer  "role_id"
     t.integer  "person_id"
     t.integer  "contributable_id"
     t.string   "contributable_type"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(:version => 20110411141603) do
 
   create_table "editions", :force => true do |t|
     t.string   "title"
-    t.string   "editor"
     t.string   "translator"
     t.string   "isbn"
     t.string   "edition_year"
@@ -35,6 +34,13 @@ ActiveRecord::Schema.define(:version => 20110411141603) do
     t.datetime "updated_at"
     t.text     "description"
     t.integer  "cover_id"
+    t.integer  "editor_id"
+  end
+
+  create_table "editors", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "people", :force => true do |t|
@@ -55,6 +61,12 @@ ActiveRecord::Schema.define(:version => 20110411141603) do
 
   create_table "publications", :force => true do |t|
     t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

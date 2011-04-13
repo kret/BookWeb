@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id            :integer         not null, primary key
+#  first_name    :string(255)
+#  last_name     :string(255)
+#  date_of_birth :date
+#  date_of_death :date
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
 class Person < ActiveRecord::Base
   attr_accessible :first_name, :last_name
 
@@ -7,11 +20,14 @@ class Person < ActiveRecord::Base
   has_many :contributions,  :dependent => :destroy
   has_many :author_of,      :through => :contributions,
                             :class_name => "Publication",
-                            :conditions => "contributions.role = 1"
+                            :source => :contributable,
+                            :conditions => "contributions.role_id = 1"
   has_many :translator_of,  :through => :contributions,
                             :class_name => "Edition",
-                            :conditions => "contributions.role = 2"
+                            :source => :contributable,
+                            :conditions => "contributions.role_id = 3"
   has_many :illustrator_of, :through => :contributions,
                             :class_name => "Edition",
-                            :conditions => "contributions.role = 3"
+                            :source => :contributable,
+                            :conditions => "contributions.role_id = 2"
 end

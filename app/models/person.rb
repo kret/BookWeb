@@ -21,13 +21,16 @@ class Person < ActiveRecord::Base
   has_many :author_of,      :through => :contributions,
                             :class_name => "Publication",
                             :source => :contributable,
+                            :source_type => "Publication",
                             :conditions => "contributions.role_id = 1"
   has_many :translator_of,  :through => :contributions,
                             :class_name => "Edition",
                             :source => :contributable,
+                            :source_type => "Edition",
                             :conditions => "contributions.role_id = 3"
   has_many :illustrator_of, :through => :contributions,
                             :class_name => "Edition",
                             :source => :contributable,
+                            :source_type => "Edition",
                             :conditions => "contributions.role_id = 2"
 end

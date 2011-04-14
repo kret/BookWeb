@@ -32,6 +32,7 @@ class Edition < ActiveRecord::Base
   validates :language,      :presence => true
 
   belongs_to :publication
+  belongs_to :editor
   has_many :contributions,  :as => :contributable,
                             :dependent => :destroy
   has_many :translators,    :through => :contributions,

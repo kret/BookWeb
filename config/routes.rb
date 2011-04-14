@@ -1,4 +1,11 @@
 BookWeb::Application.routes.draw do
+
+  resources :users, :only => [:new, :create, :show, :index]
+
+  match '/signup', :to => 'users#new'
+
+  root :to => 'users#new'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

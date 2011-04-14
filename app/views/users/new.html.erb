@@ -1,0 +1,31 @@
+<div id="registration-form">
+  <h1>Rejestracja</h1>
+
+  <%= form_for @user do |f| %>
+  <% if f.object.errors.any? %>
+    <div>
+      <h2>Znaleziono <%= pluralize(f.object.errors.count, "błąd") %> 
+          w formularzu:</h2>
+      <p>Problemy dotyczą następujących pól:</p>
+      <ul>
+      <% f.object.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <dl>
+      <dt><%= f.label :first_name, "Imię:"%></dt>
+      <dd><%= f.text_field :first_name, :maxlength => 90, :size => 30 %></dd>
+      <dt><%= f.label :last_name, "Nazwisko:"%></dt>
+      <dd><%= f.text_field :last_name, :maxlength => 90, :size => 30 %></dd>
+      <dt><%= f.label :email, "Adres e-mail:"%></dt>
+      <dd><%= f.email_field :email %></dd>
+      <dt><%= f.label :password, "Hasło:"%></dt>
+      <dd><%= f.password_field :password, :maxlength => 40, :size => 30 %></dd>
+      <dt><%= f.label :password_confirmation, "Potwierdź hasło:"%></dt>
+      <dd><%= f.password_field :password_confirmation, :maxlength => 40, :size => 30 %></dd>
+    </dl>
+    <%= f.submit "Zarejestruj się" %>
+  <% end %>
+</div>

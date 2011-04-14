@@ -1,4 +1,8 @@
 pl:
+  user:
+    flash:
+      registration: "Dziękujemy za dokonanie rejestracji."
+
   role:
     name:
       author: "Autor"

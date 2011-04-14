@@ -1,0 +1,9 @@
+<h1><%= @user.first_name %> <%= @user.last_name %></h1>
+
+<% flash.each do |key, value| %>
+  <div class="flash <%= key %>"><%= value %></div>
+<% end %>
+
+<div>
+	<%= @user.email %>
+</div>

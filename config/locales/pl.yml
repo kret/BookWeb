@@ -3,6 +3,11 @@ pl:
     flash:
       registration: "Dziękujemy za dokonanie rejestracji."
 
+  session:
+    flash:
+      login_failure: "Błędny adres email i/lub hasło."
+      login_required: "Proszę zalogować się, aby obejrzeć tę stronę."
+
   role:
     name:
       author: "Autor"

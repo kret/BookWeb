@@ -1,31 +1,33 @@
-<div id="registration-form">
-  <h1>Rejestracja</h1>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "register-login.css" %>
+<% end %>
 
-  <%= form_for @user do |f| %>
-  <% if f.object.errors.any? %>
+<div id="page">
+
+<div id="help-area">
+  Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Sed lacus dui, plac.
+  <br /><br />
+  Porttitor a, tincidunt ut purus. Pellent es que ut ullamcorper turpis. In hac ha btasse platea dictumst. Nam mollis magna at aug ue viverra nec sollicitu din neque molestie. Aliquam fermen.
+</div>
+
+<%= render 'sessions/new' %>
+
+<section id="registration-widget">
+  <h1>Zarejestruj się!</h1>
+  <%= form_for @user, :html => { :onsubmit => "return checkform(this)" } do |f| %>
     <div>
-      <h2>Znaleziono <%= pluralize(f.object.errors.count, "błąd") %> 
-          w formularzu:</h2>
-      <p>Problemy dotyczą następujących pól:</p>
-      <ul>
-      <% f.object.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+      <%= f.label :email, "E-mail" %>
+      <%= f.email_field :email %>
     </div>
+    <div>
+      <%= f.label :password, "Hasło" %>
+      <%= f.password_field :password, :maxlength => 40, :min => 6 %>
+    </div>
+    <div>
+      <%= f.label :password_confirmation, "Potwierdź hasło" %>
+      <%= f.password_field :password_confirmation, :maxlength => 40, :min => 6 %>
+    </div>
+    <%= f.submit "Załóż konto" %>
   <% end %>
-    <dl>
-      <dt><%= f.label :first_name, "Imię:"%></dt>
-      <dd><%= f.text_field :first_name, :maxlength => 90, :size => 30 %></dd>
-      <dt><%= f.label :last_name, "Nazwisko:"%></dt>
-      <dd><%= f.text_field :last_name, :maxlength => 90, :size => 30 %></dd>
-      <dt><%= f.label :email, "Adres e-mail:"%></dt>
-      <dd><%= f.email_field :email %></dd>
-      <dt><%= f.label :password, "Hasło:"%></dt>
-      <dd><%= f.password_field :password, :maxlength => 40, :size => 30 %></dd>
-      <dt><%= f.label :password_confirmation, "Potwierdź hasło:"%></dt>
-      <dd><%= f.password_field :password_confirmation, :maxlength => 40, :size => 30 %></dd>
-    </dl>
-    <%= f.submit "Zarejestruj się" %>
-  <% end %>
+</section>
 </div>

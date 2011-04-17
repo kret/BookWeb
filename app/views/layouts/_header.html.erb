@@ -1,1 +1,18 @@
-<h1>Header</h1>
+<header>
+  <a id="logo">BookWeb</a> <!-- on home page - there should be no action, on others - it should be a link -->
+  <nav>
+    <section>
+      <a>Pomoc</a> | <a>Konto użytkownika</a>
+      <% if signed_in? %>
+      | <%= link_to "Wyloguj się", signout_path, :method => :delete %>
+      <% end %>
+    </section>
+
+    <section>
+      <a class="main-element">Dodaj książkę</a> | <a class="main-element">Dodaj osobę</a>
+      <form id="search">
+        <label for="search-area">Wyszukaj</label><input id="search-area" type="text" /><input type="submit" value="Szukaj">
+      </form>
+    </section>
+  </nav>
+</header>

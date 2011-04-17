@@ -1,0 +1,87 @@
+#page {
+	background: url('images/login-text.png'), url('images/login-hands.jpg') 0px 120px no-repeat;
+	height: 404px;
+	position: relative;
+}
+
+#help-area {
+	float: left;
+	width: 220px;
+	text-align: justify;
+	color: #938475;
+}
+
+#login-widget {
+	background-color: #B59AB1;
+	width: 590px;
+	float: right;
+	height: 56px;
+	color: white;
+	position: relative;
+	padding: 10px 60px;
+	border-radius: 30px 0px 0px 30px;
+}
+#login-widget a {
+	color: #644F3A;
+}
+
+#login-widget div {
+	width: 220px;
+	float:left;
+	margin: 0px 10px;
+}
+
+#login-widget label, #login-widget input {
+	font-size: 120%;
+}
+
+#login-widget input[type=submit] {
+	width: 90px;
+	margin-top: 22px;
+	margin-left: 10px;
+	float: left;
+}
+#login-widget input[type=email], #login-widget input[type=password] {
+	width: 214px;
+	background: rgba(255,255,255,.4);
+	border: none;
+	margin: 0;
+	padding: 3px;
+
+}
+
+
+#registration-widget {
+	position: absolute;
+	bottom: 40px;
+	left: 250px;
+	width: 300px; /*540px*/
+}
+#registration-widget label {
+	width: 100px;
+	text-align: right;
+	display: inline-block;
+}
+#registration-widget input[type=submit] {
+	margin-left: 110px;
+	width: 110px;
+}
+
+#registration-widget div {
+	margin: 15px 0px;
+}
+
+#registration-widget input[type=email],
+#registration-widget input[type=password] {
+	padding: 5px;
+	border: 1px solid #D0CAC4;
+	margin: 0px 0px 0px 5px;
+	width: 180px;
+}
+#registration-widget h1 { 
+	font-size: 28px;
+	font-family: Cantarell;
+	color: #610455;
+	margin-left: 105px;
+	margin-bottom: 20px;
+}

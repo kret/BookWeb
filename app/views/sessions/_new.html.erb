@@ -1,0 +1,14 @@
+<section id="login-widget">
+  <%= form_for(:session, :url => sessions_path, :html => { :autocomplete => "off", :onsubmit => "return checkform(this)" }) do |f| %>
+    <div>
+      <%= f.label :email, "E-mail" %>
+      <%= f.email_field :email %>
+    </div>
+    <div>
+      <%= f.label :password, "Hasło" %>
+      <%= f.password_field :password, :maxlength => 40, :min => 6 %>
+      <a id="forgot-password">Zapomniałeś hasła?</a>
+    </div>
+    <%= f.submit "Zaloguj się", :class => "main-action" %>
+  <% end %>
+</section>

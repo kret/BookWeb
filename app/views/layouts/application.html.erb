@@ -2,14 +2,17 @@
 <html>
   <head>
     <title>BookWeb</title>
-    <%= stylesheet_link_tag :all %>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <%= stylesheet_link_tag "main.css" %>
+    <%= yield :head if content_for? :head %>
     <%= javascript_include_tag :defaults %>
     <%= csrf_meta_tag %>
   </head>
 
   <body>
-    <%= render 'shared/header' %>
+    <%= render 'layouts/header' %>
     <%= yield %>
-    <%= render 'shared/footer' %>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

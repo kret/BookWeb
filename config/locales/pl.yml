@@ -1,4 +1,16 @@
 pl:
+  publication:
+    flash:
+      created_successfully: "Publikacja została dodana."
+      edited_successfully: "Publikacja zaktualizowana."
+      deleted_successully: "Publikacja usunięta."
+
+  person:
+    flash:
+      created_successfully: "Osoba została dodana."
+      edited_successfully: "Osoba zaktualizowana."
+      deleted_successully: "Osoba usunięta."
+
   user:
     flash:
       registration: "Dziękujemy za dokonanie rejestracji."

@@ -23,13 +23,11 @@
 #
 
 class Edition < ActiveRecord::Base
-  attr_accessible :title, :description, :isbn, :series, :edition_date, :issue_number, :language, :original_price, :page_count, :cover_type, :dimentions_width, :dimentions_height
+  attr_accessible :description, :isbn, :series, :edition_date, :issue_number, :original_price, :page_count, :cover_type, :dimentions_width, :dimentions_height
 
-  validates :title,         :presence => true
   validates :description,   :presence => true
   validates :isbn,          :presence => true
   validates :edition_date,  :presence => true
-  validates :language,      :presence => true
 
   belongs_to :publication
   belongs_to :editor

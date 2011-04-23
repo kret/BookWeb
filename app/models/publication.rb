@@ -10,7 +10,7 @@
 #
 
 class Publication < ActiveRecord::Base
-  attr_accessible :title, :original_title
+  attr_accessible :title, :original_title, :new_edition_attributes, :existing_edition_attributes
 
   validates :title, :presence => true
 
@@ -21,4 +21,31 @@ class Publication < ActiveRecord::Base
                             :class_name => "Person",
                             :source => :person,
                             :conditions => "contributions.role_id = 1"
+
+  after_update :save_editions
+
+  def new_edition_attributes=(edition_attributes)
+    edition_attributes.each do |attributes|
+      editions.build(attributes)
+    end
+  end
+
+  def existing_edition_attributes=(edition_attributes)
+    editions.reject(&:new_record?).each do |edition|
+      attributes = edition_attributes[edition.id.to_s]
+      if attributes
+        edition.attributes = attributes
+      else
+        editions.delete(edition)
+      end
+    end
+  end
+
+  private
+
+    def save_editions
+      editions.each do |edition|
+        edition.save(:validate => false)
+      end
+    end
 end

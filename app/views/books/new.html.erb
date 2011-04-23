@@ -1,0 +1,150 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "book-add", "jquery-ui-1.8.11.custom", "ui.fileUpload" %>
+<% end %>
+
+<% content_for :scripts do %>
+  <%= javascript_include_tag :jquery_ui %>
+<% end %>
+
+<%= form_for(@publication, :html => { :multipart => true }) do |pf| %>
+  <div>
+		<div id="publication-details">
+    <%= pf.label :title, "Tytuł" %><%= pf.text_field :title %>
+    <%= pf.label :original_title, "Tytuł oryginału" %><%= pf.text_field :original_title %>
+    <label for="a">Autorzy</label><input type="text" id="a" /> <%= link_to "Nowy", nil, :id => "person-add" %>
+
+    <div id="publication-author-details">
+      <ul>
+        <li>Jan Edam <a class="delete">x</a></li>
+        <li>Celina Cabacka <a class="delete">x</a></li>
+        <li>Anna Abacka <a class="delete">x</a></li>
+      <ul>
+    </div>
+
+    <div title="Dodaj nową osobę" id="dialog">
+      <%#= form_for :person, :url => people_path, :format => :json, :remote => true do |af| % >
+      <dl>
+        <dt><%= af.label :first_name, "Imię" % ></dt><dl><%= af.text_field :first_name % ></dl>
+        <dt><%= af.label :last_name, "Nazwisko" % ></dt><dl><%= af.text_field :last_name % ></dl>
+        <dt><%= af.label :date_of_birth, "Data urodzenia" % ></dt><dl><%= af.text_field :date_of_birth % ></dl>
+      </dl>
+      <%= af.submit "Nowy gość" % >
+      <% end %>
+      <dl>
+				<dt><label>Imię</label></dt><dl><input id="auth_fname" name="person[first_name]" type="text" /></dl>
+				<dt><label>Nazwisko</label></dt><dl><input id="auth_lname" name="person[last_name]" type="text" /></dl>
+				<dt><label>Data urodzenia</label></dt><dl><input id="auth_dob" name="person[date_of_birth]" type="text" /></dl>
+    </div>
+
+    <script>
+$( "#dialog" ).dialog({
+  autoOpen: false,
+  modal: true,
+  buttons : {
+    'Dodaj' : 
+    function() { 
+      var name = jQuery('#auth_fname').val();
+      var lastname = jQuery('#auth_lname').val();
+      var dob = jQuery('#auth_dob').val();
+
+      $.ajax({
+        type: 'POST',
+        url: '/people.json',
+        data: {
+          'person[first_name]':name,
+          'person[last_name]':lastname,
+          'person[date_of_birth]':dob
+        },
+        success: function( data ,x, y,z ) {
+          if (!jQuery("#publication-author-details-list")[0])
+          jQuery("#publication-author-details").html('<ul id=publication-author-details-list></ul>');
+          $( "<li id=person-"+data.person.id+">" + data.person.first_name + ' ' + data.person.last_name + '<a class=button>x</a></li>' ).appendTo( "#publication-author-details-list" );
+        },
+        error: function(e,x,y,z) {
+          console.log('error',e,x,y,z);
+        }
+      });
+
+/*          $.post( 
+          '/people', 
+          {
+            'person[first_name]':name,
+            'person[last_name]':lastname
+          },
+          function( data ,x, y,z ) {
+            console.log('udalosie', data,x,y,z)
+          }
+        );
+*/
+      $( this ).dialog( "close" );
+    }
+  }
+});
+
+jQuery('#person-add').click(function() {
+  //adding new person
+  $( "#dialog" ).dialog( "open" );
+  return false;
+});
+
+$(function() {
+  function log( message ) {
+    if (!jQuery("#publication-author-details-list")[0])
+      jQuery("#publication-author-details").html('<ul id=publication-author-details-list></ul>');
+    $( "<li>" + message + '<a class=button>x</a></li>' ).appendTo( "#publication-author-details-list" );
+  }
+
+  $( "#a" ).autocomplete({
+    source: function( request, response ) {
+      $.ajax({
+        url: "/people/autocomplete_person_last_name",
+        dataType: "json",
+        data: {
+          term: request.term
+        },
+        success: 
+        function(data) {
+          response(data);
+        },
+        error: 
+        function(e,x,y) { 
+          console.log('error', e,x,y); 
+        }
+      });
+    },
+    minLength: 2,
+    select: function( event, ui ) {
+      log( ui.item ?
+        ui.item.label :
+        "Nothing selected, input was " + this.value);
+    },
+    open: function() {
+      $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+    },
+    close: function() {
+      $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+    }
+  });
+});
+    </script>
+  </div>
+
+  <div style="width: 220px; margin: 0px 10px; float:left">
+    <h1>Kategorie</h1>
+  </div>
+  <div style="width: 300px; margin: 0px 10px; float:left">
+    <h1>Tagi</h1>
+    <input type="submit" />
+  </div>
+
+  <div style="clear: both; padding-top: 50px; border-top: 1px solid Silver">
+
+    <%= render :partial => 'edition', :collection => @publication.editions %>
+
+    <div style="clear: both;">
+      <%= pf.submit "+ Kolejne wydanie" %>
+      <%= pf.submit "Zapisz książkę i wydania" %>
+      <%= pf.submit "Zapisz książkę bez wydania" %>
+    </div>
+  </div>
+<% end %>

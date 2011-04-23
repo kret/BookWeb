@@ -31,7 +31,8 @@ module BookWeb
     config.i18n.default_locale = :pl
 
     # JavaScript files you want as :defaults (application.js is always included).
-    # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
+    config.action_view.javascript_expansions[:defaults] = %w(jquery-1.5.1 rails)
+    config.action_view.javascript_expansions[:jquery_ui] = %w(ui/jquery.ui.core ui/jquery.ui.widget ui/jquery.ui.tabs ui/jquery.ui.position ui/jquery.ui.autocomplete ui/jquery.ui.dialog ui.fileUpload)
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"

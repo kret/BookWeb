@@ -10,9 +10,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new params[:user]
     if @user.save
-      flash[:success] = t 'user.flash.registration'
       sign_in @user
-      redirect_to @user
+      redirect_to @user, :notice => t('user.flash.registration')
     else
       render 'new'
     end

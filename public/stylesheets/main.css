@@ -38,7 +38,7 @@ body {
 
 .button {
 	background-color: #CCCAC7;
-	background-image: url('../images/sprite.png');
+	background-image: url('images/sprite.png');
 	cursor: pointer; 
 	display: inline-block;
 }

@@ -1,0 +1,35 @@
+#drop-target {
+	font-family: sans-serif; 
+	width: 300px; height: 300px; 
+	margin: 0px; border: 1px dotted Grey; 
+	color: Grey; 
+	font-size: 30px; 
+	text-transform: uppercase; 
+	text-align: center; 
+	line-height: 38px;
+	float: left;
+}
+#file-upload { padding: 0px }
+
+#thumbnails {
+	float: right;
+	width: 310px;
+	height: 300px;
+}
+.img {
+	border: none; 
+	float:left; clear:right; margin:10px 10px 0 10px; 
+	width:60px; height:87px; background:#ddd none no-repeat center center; 
+	background-size:cover; -webkit-background-size:cover; -moz-background-size:cover;
+}
+
+#thumbnails > :nth-child(4n) {
+	margin-right: 0px
+}
+
+#thumbnails h4 {
+	display: none;
+}
+.border {
+	border-radius: 20px;
+}

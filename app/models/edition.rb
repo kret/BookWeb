@@ -3,10 +3,8 @@
 # Table name: editions
 #
 #  id                :integer         not null, primary key
-#  title             :string(255)
 #  isbn              :string(255)
 #  issue_number      :string(255)
-#  language          :string(255)
 #  publication_id    :integer
 #  created_at        :datetime
 #  updated_at        :datetime

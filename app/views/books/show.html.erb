@@ -1,2 +1,92 @@
-<h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "book" %>
+<% end %>
+
+<div class="book-details container_12">
+	<div class="main-column">
+		<a class="button favorite" title="Dodaj do ulubionych"></a>
+		<h1 class="h"><%= @publication.title %></h1>
+		<h6 class="d"><strong>Autor:</strong> <a href="#"><%= @publication.authors.collect { |a| "#{a.first_name} #{a.last_name}" }.join ", " unless @publication.authors.empty? %></a></h6>
+		<div class="description">
+		  <p><%= @publication.most_popular_editions[0].description %></p>
+		</div>
+		<h5>Najpopularniejsze wydania</h5>
+		<a>zobacz wszystkie wydania</a>
+		<%= render :partial => 'most_popular_edition', :collection => @publication.most_popular_editions, :as => :edition %>
+	</div>
+	<div class="descr-column">
+	  <%= image_tag @publication.cover.thumb_url, :class => 'cover' unless @publication.cover.nil? %>
+	  <% @publication.pictures.each do |i| %><%= image_tag i.thumb_url, :class => 'mini' %><% end %>
+		<h5></h5>
+		<span>
+		<a>dla dzieci</a> <br />
+		<a>proza obca</a> > <a>powieść</a>
+		</span>
+		<h5></h5>
+		<div class="cloud">
+		<a class='tag s1'>1001 books you must read before you die</a> 
+		<a class='tag s4'>19th century</a> 
+		<a class='tag s2'>adventure</a> 
+		<a class='tag s3'>alice</a> 
+		<a class='tag s4'>alice in wonderland</a> 
+		<a class='tag s2'>allegory</a> 
+		<a class='tag s1'>alternate reality</a> 
+		<a class='tag s4'>animals</a> 
+		<a class='tag s5'>british</a> 
+		<a class='tag s2'>british literature</a> 
+		<a class='tag s3'>carroll</a> 
+		<a class='tag s5'>childhood</a> 
+		<a class='tag s2'>childhood favorite</a> 
+		<a class='tag s4'>children</a> 
+		<a class='tag s1'>children’s</a> 
+		<a class='tag s2'>children’s classic</a>
+		</div>
+	</div>
+</div>
+	<div class="add-column">
+		<div class="user-book-details">
+			<h5>Społeczność</h5>
+			<a class="button do-not-like selected"></a><a class="button do-like"></a>
+			<div>
+				<span class="help">Oznacz książkę aby w przyszłości łatwiej ją znaleźć</span>
+				<span class="button tag">Mam</span>
+				<span class="button tag selected">Nie&nbsp;mam</span>
+				<span class="button tag">Oddam</span>
+				<span class="button tag">Chcę&nbsp;przeczytać</span>
+				<span class="button tag selected">Nie&nbsp;chcę&nbsp;przeczytać</span>
+			</div>
+		</div>
+	<h5>Adds</h5>
+	  isl enim, pellentesque vitae volutpat auctor, egestas in ligula. Aliquam erat 
+		volutpat. Sed mollis velit sit amet neque dictum porttitor. Donec vel eros lacus. 
+		Nulla bibendum, sem nec lobortis iaculis, dui massa elementum sem, ut eleifend metus 
+		est ac odio. Sed rhoncus, nisl a euismod mollis, ligula quam imperdiet justo, id 
+		sagittis quam augue sit amet felis
+
+	  <h5>Inne książki tego autora</h5>
+		<div>Isl enim, pellentesque vitae volutpat</div>
+		<div>Auctor, egestas in ligula. Aliquam erat</div>
+		<div>Volutpat. Sed mollis velit sit amet neque</div>
+		<div>Dictum porttitor</div>
+		<div>Donec vel eros lacus</div>
+	</div>
+	
+	<script>
+	// button - id elementu przeciwnego
+		jQuery(".tag")
+			.mousedown(function() { jQuery(this).toggleClass('click') })
+			.mouseup(function() { jQuery(this).toggleClass('click') })
+			.click(function() { jQuery(this).toggleClass('selected') })
+		jQuery(".favorite")
+			.mousedown(function() { jQuery(this).toggleClass('click') })
+			.mouseup(function() { jQuery(this).toggleClass('click') })
+			.click(function() { jQuery(this).toggleClass('selected') })
+		jQuery(".do-not-like")
+			.mousedown(function() { jQuery(this).toggleClass('click') })
+			.mouseup(function() { jQuery(this).toggleClass('click') })
+			.click(function() { jQuery(this).toggleClass('selected') })
+		jQuery(".do-like")
+			.mousedown(function() { jQuery(this).toggleClass('click') })
+			.mouseup(function() { jQuery(this).toggleClass('click') })
+			.click(function() { jQuery(this).toggleClass('selected') })
+	</script>

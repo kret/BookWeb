@@ -28,11 +28,23 @@ class PictureUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :thumb do
-    process :scale => [50, 70]
+    # process :scale => [50, 70]
+    process :resize_to_fill => [50, 70]
+#    process :convert => 'png'
+#
+#    def filename
+#      super + '.png'
+#    end
   end
 
   version :cover do
-    process :scale => [220, 320]
+    # process :scale => [220, 320]
+    process :resize_to_fill => [220, 320]
+#    process :convert => 'png'
+#
+#    def filename
+#      super + '.png'
+#    end
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
@@ -41,9 +53,11 @@ class PictureUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
+  process :convert => 'png'
+
   # Override the filename of the uploaded files:
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  def filename
+    super + '.png'
+  end
 
 end

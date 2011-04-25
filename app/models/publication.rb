@@ -24,6 +24,21 @@ class Publication < ActiveRecord::Base
 
   after_update :save_editions
 
+  def cover
+    most_popular_editions[0].cover
+  end
+
+  def pictures
+    most_popular_editions[0].pictures
+  end
+
+  def most_popular_editions
+    mpe = []
+    mpe << editions[0] unless editions[0].nil?
+    mpe << editions[1] unless editions[1].nil?
+    mpe
+  end
+
   def new_edition_attributes=(edition_attributes)
     edition_attributes.each do |attributes|
       editions.build(attributes)

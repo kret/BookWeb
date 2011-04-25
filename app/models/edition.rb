@@ -40,7 +40,6 @@ class Edition < ActiveRecord::Base
                             :source => :person,
                             :conditions => "contributions.role_id = 2"
   has_one :cover,           :class_name => "Picture",
-                            :foreign_key => "cover_id",
                             :dependent => :destroy
   has_many :pictures,       :dependent => :destroy
 end

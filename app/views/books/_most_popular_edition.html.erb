@@ -1,0 +1,23 @@
+<dl class="edition">
+  <% if edition.editor %>
+	<dt>Wydawnictwo:</dt><dd><%= edition.editor %></dd>
+	<% end %>
+  <% if edition.original_price %>
+	<dt>Cena z okładki:</dt><dd><%= edition.original_price %></dd>
+	<% end %>
+  <% if edition.isbn %>
+	<dt>ISBN:</dt><dd><%= edition.isbn %></dd>
+	<% end %>
+  <% if edition.page_count %>
+	<dt>Liczba stron:</dt><dd><%= edition.page_count %></dd>
+	<% end %>
+  <% if edition.cover_type %>
+	<dt>Oprawa:</dt><dd><%= edition.cover_type %></dd>
+	<% end %>
+  <% unless edition.translators.empty? %>
+	<dt>Tłumaczenie:</dt><dd><%= edition.translators.collect { |t| "#{t.first_name} #{t.last_name}" }.join ", " %></dd>
+	<% end %>
+  <% if edition.dimentions_width && edition.dimentions_height %>
+	<dt>Wymiary:</dt><dd><%= edition.dimentions_width %> x <%= edition.dimentions_height %> mm</dd>
+	<% end %>
+</dl>

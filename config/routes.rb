@@ -7,12 +7,14 @@ BookWeb::Application.routes.draw do
     get :autocomplete_person_last_name, :on => :collection
   end
 
-  match '/:title',  :to => 'books#show'
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
+  match '/home',    :to => 'pages#home'
 
-  root :to => 'users#new'
+  match '/:title',  :to => 'books#show'
+
+  root :to => 'pages#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

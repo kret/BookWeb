@@ -1,5 +1,9 @@
 <header>
-  <a id="logo">BookWeb</a> <!-- on home page - there should be no action, on others - it should be a link -->
+  <% unless @logo_not_a_link.nil? %>
+  <a id="logo">BookWeb</a>
+  <% else %>
+  <%= link_to "BookWeb", root_path, :id => "logo" %>
+  <% end %>
   <nav>
     <section>
       <a>Pomoc</a> | <a>Konto użytkownika</a>

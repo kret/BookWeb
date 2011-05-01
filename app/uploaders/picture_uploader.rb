@@ -30,21 +30,11 @@ class PictureUploader < CarrierWave::Uploader::Base
   version :thumb do
     # process :scale => [50, 70]
     process :resize_to_fill => [50, 70]
-#    process :convert => 'png'
-#
-#    def filename
-#      super + '.png'
-#    end
   end
 
   version :cover do
     # process :scale => [220, 320]
     process :resize_to_fill => [220, 320]
-#    process :convert => 'png'
-#
-#    def filename
-#      super + '.png'
-#    end
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
@@ -57,7 +47,7 @@ class PictureUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   def filename
-    super + '.png'
+    super + '.png' if original_filename
   end
 
 end

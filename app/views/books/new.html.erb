@@ -11,7 +11,8 @@
 		<div id="publication-details">
     <%= pf.label :title, "Tytuł" %><%= pf.text_field :title %>
     <%= pf.label :original_title, "Tytuł oryginału" %><%= pf.text_field :original_title %>
-    <label for="a">Autorzy</label><input type="text" id="a" /> <%= link_to "Nowy", nil, :id => "person-add" %>
+    <%#label for="a">Autorzy</label><input type="text" id="a" /> <%= link_to "Nowy", nil, :id => "person-add" %>
+    <label for="a">Autorzy</label><input type="text" name="publication[au_ids]" /> <%= link_to "Nowy", nil, :id => "person-add" %>
 
     <div id="publication-author-details">
       <ul>

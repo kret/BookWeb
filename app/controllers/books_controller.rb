@@ -14,7 +14,6 @@ class BooksController < ApplicationController
   def new
     @publication = Publication.new
     @publication.editions.build
-    # @publication.contributions.build
   end
 
   def create

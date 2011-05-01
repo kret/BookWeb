@@ -14,6 +14,9 @@
   <% if edition.cover_type %>
 	<dt>Oprawa:</dt><dd><%= edition.cover_type %></dd>
 	<% end %>
+  <% unless edition.illustrators.empty? %>
+	<dt>Ilustracje:</dt><dd><%= edition.illustrators.collect { |t| "#{t.first_name} #{t.last_name}" }.join ", " %></dd>
+	<% end %>
   <% unless edition.translators.empty? %>
 	<dt>Tłumaczenie:</dt><dd><%= edition.translators.collect { |t| "#{t.first_name} #{t.last_name}" }.join ", " %></dd>
 	<% end %>

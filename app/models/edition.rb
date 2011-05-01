@@ -24,7 +24,8 @@ class Edition < ActiveRecord::Base
   attr_accessible :description, :isbn, :series, :edition_date,
                   :issue_number, :original_price, :page_count,
                   :cover_type, :dimentions_width, :dimentions_height,
-                  :cover_attributes, :new_pictures_attributes, :existing_pictures_attributes
+                  :cover_attributes, :new_pictures_attributes, :existing_pictures_attributes,
+                  :tr_ids, :il_ids
 
   validates :description,   :presence => true
   validates :isbn,          :presence => true
@@ -33,6 +34,7 @@ class Edition < ActiveRecord::Base
   belongs_to :publication
   belongs_to :editor
   has_many :contributions,  :as => :contributable,
+                            :autosave => true,
                             :dependent => :destroy
   has_many :translators,    :through => :contributions,
                             :class_name => "Person",
@@ -78,6 +80,18 @@ class Edition < ActiveRecord::Base
       else
         all_pictures.delete(picture)
       end
+    end
+  end
+
+  def tr_ids=(ids)
+    ids.split(',').collect(&:strip).each do |i|
+      contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 3 })
+    end
+  end
+
+  def il_ids=(ids)
+    ids.split(',').collect(&:strip).each do |i|
+      contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 2 })
     end
   end
 end

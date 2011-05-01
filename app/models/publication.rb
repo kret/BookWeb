@@ -10,9 +10,11 @@
 #
 
 class Publication < ActiveRecord::Base
-  attr_accessible :title, :original_title, :new_edition_attributes, :existing_edition_attributes
+  attr_accessible :title, :original_title, :new_edition_attributes, :existing_edition_attributes, :au_ids
 
-  validates :title, :presence => true
+  validates :title,   :presence => true
+  validates :au_ids,  :presence => true,
+                      :format => { :with => /(\d+,?)+/ }
 
   has_many :editions,       :autosave => true,
                             :dependent => :destroy
@@ -54,5 +56,16 @@ class Publication < ActiveRecord::Base
         editions.delete(edition)
       end
     end
+  end
+
+  def au_ids=(ids)
+    @au_ids = ids
+    ids.split(',').collect(&:strip).each do |i|
+      contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 1 })
+    end
+  end
+
+  def au_ids
+    @au_ids
   end
 end

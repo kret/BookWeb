@@ -15,8 +15,8 @@
 		<%= render :partial => 'most_popular_edition', :collection => @publication.most_popular_editions, :as => :edition %>
 	</div>
 	<div class="descr-column">
-	  <%= image_tag @publication.cover.thumb_url, :class => 'cover' unless @publication.cover.nil? %>
-	  <% @publication.pictures.each do |i| %><%= image_tag i.thumb_url, :class => 'mini' %><% end %>
+	  <%= image_tag @publication.cover.image_url(:cover), :class => 'cover' unless @publication.cover.nil? %>
+	  <% @publication.pictures.each do |i| %><%= image_tag i.image_url(:thumb), :class => 'mini' %><% end %>
 		<h5></h5>
 		<span>
 		<a>dla dzieci</a> <br />

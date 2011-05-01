@@ -21,7 +21,10 @@
 #
 
 class Edition < ActiveRecord::Base
-  attr_accessible :description, :isbn, :series, :edition_date, :issue_number, :original_price, :page_count, :cover_type, :dimentions_width, :dimentions_height
+  attr_accessible :description, :isbn, :series, :edition_date,
+                  :issue_number, :original_price, :page_count,
+                  :cover_type, :dimentions_width, :dimentions_height,
+                  :cover_attributes, :new_pictures_attributes, :existing_pictures_attributes
 
   validates :description,   :presence => true
   validates :isbn,          :presence => true
@@ -39,7 +42,42 @@ class Edition < ActiveRecord::Base
                             :class_name => "Person",
                             :source => :person,
                             :conditions => "contributions.role_id = 2"
-  has_one :cover,           :class_name => "Picture",
+  belongs_to :cover,        :class_name => "Picture",
                             :dependent => :destroy
-  has_many :pictures,       :dependent => :destroy
+  has_many :all_pictures,   :class_name => "Picture",
+                            :autosave => true,
+                            :dependent => :destroy
+
+  def pictures
+    all_pictures - [cover]
+  end
+
+  def cover_attributes=(cover_attributes)
+    if cover
+      if cover_attributes
+        cover.attributes = cover_attributes
+      else
+        cover.delete
+      end
+    else
+      cover = build_cover(cover_attributes)
+    end
+  end
+
+  def new_pictures_attributes=(new_pics_attributes)
+    new_pics_attributes.each do |pic_attributes|
+      all_pictures.build(pic_attributes)
+    end
+  end
+
+  def existing_pictures_attributes=(existing_pics_attributes)
+    all_pictures.reject(&:new_record?).each do |picture|
+      attributes = existing_pics_attributes[picture.id.to_s]
+      if attributes
+        picture.attributes = attributes
+      else
+        all_pictures.delete(picture)
+      end
+    end
+  end
 end

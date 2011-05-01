@@ -26,10 +26,17 @@ class Edition < ActiveRecord::Base
                   :cover_type, :dimentions_width, :dimentions_height,
                   :cover_attributes, :new_pictures_attributes, :existing_pictures_attributes,
                   :tr_ids, :il_ids
+  attr_reader :tr_ids, :il_ids
 
   validates :description,   :presence => true
   validates :isbn,          :presence => true
   validates :edition_date,  :presence => true
+  validates :tr_ids,        :format => { :with => /(\d+ *,? *)+/ }
+  validate :tr_ids,         :valid_tr_ids
+  validates :il_ids,        :format => { :with => /(\d+ *,? *)+/ }
+  validate :il_ids,         :valid_il_ids
+
+  after_validation :make_builds
 
   belongs_to :publication
   belongs_to :editor
@@ -84,14 +91,42 @@ class Edition < ActiveRecord::Base
   end
 
   def tr_ids=(ids)
-    ids.split(',').collect(&:strip).each do |i|
-      contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 3 })
-    end
+    @tr_ids = ids.split(',').collect(&:strip).collect(&:to_i).uniq
   end
 
   def il_ids=(ids)
-    ids.split(',').collect(&:strip).each do |i|
-      contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 2 })
-    end
+    @il_ids = ids.split(',').collect(&:strip).collect(&:to_i).uniq
   end
+
+  protected
+
+    def valid_tr_ids
+      begin
+        Person.find tr_ids
+      rescue ActiveRecord::RecordNotFound
+        errors[:tr_ids] << I18n.translate('edition.validation.tr_ids.record_not_valid')
+      end
+    end
+
+    def valid_il_ids
+      begin
+        Person.find il_ids
+      rescue ActiveRecord::RecordNotFound
+        errors[:il_ids] << I18n.translate('edition.validation.il_ids.record_not_valid')
+      end
+    end
+
+    def make_builds
+      if errors[:tr_ids].empty?
+        tr_ids.each do |i|
+          contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 3 })
+        end
+      end
+
+      if errors[:il_ids].empty?
+        il_ids.each do |i|
+          contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 2 })
+        end
+      end
+    end
 end

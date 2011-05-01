@@ -11,10 +11,14 @@
 
 class Publication < ActiveRecord::Base
   attr_accessible :title, :original_title, :new_edition_attributes, :existing_edition_attributes, :au_ids
+  attr_reader :au_ids
 
   validates :title,   :presence => true
   validates :au_ids,  :presence => true,
-                      :format => { :with => /(\d+,?)+/ }
+                      :format => { :with => /(\d+ *,? *)+/ }
+  validate :au_ids,   :valid_au_ids
+
+  after_validation :make_builds
 
   has_many :editions,       :autosave => true,
                             :dependent => :destroy
@@ -59,13 +63,24 @@ class Publication < ActiveRecord::Base
   end
 
   def au_ids=(ids)
-    @au_ids = ids
-    ids.split(',').collect(&:strip).each do |i|
-      contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 1 })
-    end
+    @au_ids = ids.split(',').collect(&:strip).collect(&:to_i).uniq
   end
 
-  def au_ids
-    @au_ids
-  end
+  protected
+
+    def valid_au_ids
+      begin
+        Person.find au_ids
+      rescue ActiveRecord::RecordNotFound
+        errors[:au_ids] << I18n.translate('publication.validation.au_ids.record_not_valid')
+      end
+    end
+
+    def make_builds
+      if errors[:au_ids].empty?
+        au_ids.each do |i|
+          contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 1 })
+        end
+      end
+    end
 end

@@ -4,6 +4,17 @@ pl:
       created_successfully: "Publikacja została dodana."
       edited_successfully: "Publikacja zaktualizowana."
       deleted_successully: "Publikacja usunięta."
+    validation:
+      au_ids:
+        record_not_valid: "Niewłaściwe ID autorów."
+
+  edition:
+    validation:
+      tr_ids:
+        record_not_valid: "Niewłaściwe ID tłumaczy."
+      il_ids:
+        record_not_valid: "Niewłaściwe ID ilustratorów."
+
 
   person:
     flash:

@@ -14,15 +14,15 @@ class Publication < ActiveRecord::Base
 
   validates :title, :presence => true
 
-  has_many :editions,       :dependent => :destroy
-  has_many :contributions,  :as => :contributable,
+  has_many :editions,       :autosave => true,
+                            :dependent => :destroy
+  has_many :contributions,  :autosave => true,
+                            :as => :contributable,
                             :dependent => :destroy
   has_many :authors,        :through => :contributions,
                             :class_name => "Person",
                             :source => :person,
                             :conditions => "contributions.role_id = 1"
-
-  after_update :save_editions
 
   def cover
     most_popular_editions[0].cover
@@ -55,12 +55,4 @@ class Publication < ActiveRecord::Base
       end
     end
   end
-
-  private
-
-    def save_editions
-      editions.each do |edition|
-        edition.save(:validate => false)
-      end
-    end
 end

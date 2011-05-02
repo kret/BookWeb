@@ -6,7 +6,7 @@
 	<div class="main-column">
 		<a class="button favorite" title="Dodaj do ulubionych"></a>
 		<h1 class="h"><%= @publication.title %></h1>
-		<h6 class="d"><strong>Autor:</strong> <a href="#"><%= @publication.authors.collect { |a| "#{a.first_name} #{a.last_name}" }.join ", " unless @publication.authors.empty? %></a></h6>
+		<h6 class="d"><strong>Autor:</strong> <%= @publication.authors.collect { |a| link_to_person(a) }.join(", ").html_safe unless @publication.authors.empty? %></h6>
 		<div class="description">
 		  <p><%= @publication.most_popular_editions[0].description %></p>
 		</div>

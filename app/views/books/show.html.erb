@@ -71,12 +71,27 @@
 		est ac odio. Sed rhoncus, nisl a euismod mollis, ligula quam imperdiet justo, id 
 		sagittis quam augue sit amet felis
 
-	  <h5>Inne książki tego autora</h5>
-		<div>Isl enim, pellentesque vitae volutpat</div>
-		<div>Auctor, egestas in ligula. Aliquam erat</div>
-		<div>Volutpat. Sed mollis velit sit amet neque</div>
-		<div>Dictum porttitor</div>
-		<div>Donec vel eros lacus</div>
+<% other_books = @publication.authors_other_books %>
+<% if other_books %>
+  <% if other_books.size > 1 %>
+	  <h5>Inne książki tych autorów</h5>
+	<% else %>
+    <h5>Inne książki tego autora</h5>
+	<% end %>
+	<% other_books.each do |a, b| %>
+    <% unless b.empty? %>
+    <ul>
+	    <li><%= link_to_person(a) %>
+	      <ul>
+	      <% b.each do |book| %>
+	        <li><%= link_to_publication(book) %></li>
+        <% end %>
+	      </ul>
+      </li>
+	  </ul>
+	  <% end %>
+  <% end %>
+<% end %>
 	</div>
 	
 	<script>

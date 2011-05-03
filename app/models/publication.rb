@@ -38,6 +38,14 @@ class Publication < ActiveRecord::Base
     most_popular_editions[0].page_pictures
   end
 
+  def authors_other_books
+    other_books = {}
+    authors.each do |a|
+      other_books[a] = a.author_of - [self] if a.author_of.size > 1
+    end
+    other_books
+  end
+
   def most_popular_editions
     mpe = []
     mpe << editions[0] unless editions[0].nil?

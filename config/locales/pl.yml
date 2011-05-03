@@ -7,6 +7,8 @@ pl:
     validation:
       au_ids:
         record_not_valid: "Niewłaściwe ID autorów."
+    message:
+      title_unknown: "(Tytuł nieznany)"
 
   edition:
     validation:

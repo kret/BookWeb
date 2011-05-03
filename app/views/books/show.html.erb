@@ -24,7 +24,7 @@
 	  <% else %>
 	  <%= image_tag "/images/fallback/cover_default.png", :class => 'cover' %>
 	  <% end %>
-	  <% @publication.pictures.each do |i| %><%= image_tag i.image_url(:thumb), :class => 'mini' %><% end %>
+	  <% @publication.page_pictures.each do |i| %><%= image_tag i.image_url(:thumb), :class => 'mini' %><% end %>
 		<h5></h5>
 		<span>
 		<a>dla dzieci</a> <br />
@@ -56,7 +56,7 @@
 			<h5>Społeczność</h5>
 			<a class="button do-not-like selected"></a><a class="button do-like"></a>
 			<div>
-				<span class="help">Oznacz książkę aby w przyszłości łatwiej ją znaleźć</span>
+				<span class="help">Oznacz książkę, aby w przyszłości łatwiej ją znaleźć</span>
 				<span class="button tag">Mam</span>
 				<span class="button tag selected">Nie&nbsp;mam</span>
 				<span class="button tag">Oddam</span>

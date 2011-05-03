@@ -34,8 +34,8 @@ class Publication < ActiveRecord::Base
     most_popular_editions[0].cover
   end
 
-  def pictures
-    most_popular_editions[0].pictures
+  def page_pictures
+    most_popular_editions[0].page_pictures
   end
 
   def most_popular_editions

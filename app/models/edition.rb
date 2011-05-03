@@ -53,12 +53,12 @@ class Edition < ActiveRecord::Base
                             :conditions => "contributions.role_id = 2"
   belongs_to :cover,        :class_name => "Picture",
                             :dependent => :destroy
-  has_many :all_pictures,   :class_name => "Picture",
+  has_many :pictures,   :class_name => "Picture",
                             :autosave => true,
                             :dependent => :destroy
 
-  def pictures
-    all_pictures - [cover]
+  def page_pictures
+    pictures - [cover]
   end
 
   def cover_attributes=(cover_attributes)
@@ -75,17 +75,17 @@ class Edition < ActiveRecord::Base
 
   def new_pictures_attributes=(new_pics_attributes)
     new_pics_attributes.each do |pic_attributes|
-      all_pictures.build(pic_attributes)
+      pictures.build(pic_attributes)
     end
   end
 
   def existing_pictures_attributes=(existing_pics_attributes)
-    all_pictures.reject(&:new_record?).each do |picture|
+    pictures.reject(&:new_record?).each do |picture|
       attributes = existing_pics_attributes[picture.id.to_s]
       if attributes
         picture.attributes = attributes
       else
-        all_pictures.delete(picture)
+        pictures.delete(picture)
       end
     end
   end

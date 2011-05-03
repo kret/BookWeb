@@ -10,12 +10,20 @@
 		<div class="description">
 		  <p><%= @publication.most_popular_editions[0].description %></p>
 		</div>
+		<% unless @publication.most_popular_editions.empty? %>
 		<h5>Najpopularniejsze wydania</h5>
 		<a>zobacz wszystkie wydania</a>
 		<%= render :partial => 'most_popular_edition', :collection => @publication.most_popular_editions, :as => :edition %>
+		<% else %>
+		Brak informacji o wydaniach tej publikacji.
+		<% end %>
 	</div>
 	<div class="descr-column">
-	  <%= image_tag @publication.cover.image_url(:cover), :class => 'cover' unless @publication.cover.nil? %>
+	  <% if @publication.cover %>
+	  <%= image_tag @publication.cover.image_url(:cover), :class => 'cover' %>
+	  <% else %>
+	  <%= image_tag "/images/fallback/cover_default.png", :class => 'cover' %>
+	  <% end %>
 	  <% @publication.pictures.each do |i| %><%= image_tag i.image_url(:thumb), :class => 'mini' %><% end %>
 		<h5></h5>
 		<span>

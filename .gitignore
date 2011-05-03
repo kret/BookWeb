@@ -10,4 +10,5 @@ doc/
 *.tmproj
 .project
 .rvmrc
+/public/uploads/tmp/
 

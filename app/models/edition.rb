@@ -102,7 +102,7 @@ class Edition < ActiveRecord::Base
 
     def valid_tr_ids
       begin
-        Person.find tr_ids
+        Person.find tr_ids if tr_ids
       rescue ActiveRecord::RecordNotFound
         errors[:tr_ids] << I18n.translate('edition.validation.tr_ids.record_not_valid')
       end
@@ -110,7 +110,7 @@ class Edition < ActiveRecord::Base
 
     def valid_il_ids
       begin
-        Person.find il_ids
+        Person.find il_ids if il_ids
       rescue ActiveRecord::RecordNotFound
         errors[:il_ids] << I18n.translate('edition.validation.il_ids.record_not_valid')
       end

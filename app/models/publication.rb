@@ -78,7 +78,7 @@ class Publication < ActiveRecord::Base
 
     def valid_au_ids
       begin
-        Person.find au_ids
+        Person.find au_ids if au_ids
       rescue ActiveRecord::RecordNotFound
         errors[:au_ids] << I18n.translate('publication.validation.au_ids.record_not_valid')
       end

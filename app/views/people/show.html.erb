@@ -1,3 +1,35 @@
-<h1>Osoba: <%= @person.first_name %> <%= @person.last_name %></h1>
+<h1>Osoba: <%= @person.display_name %></h1>
 
-<p>Data urodzenia: <%#= @person.date_of_birth %></p>
+<% if @person.date_of_birth %>
+<p>Data urodzenia: <%= @person.date_of_birth %></p>
+<% end %>
+<% if @person.date_of_death %>
+<p>Data śmierci: <%= @person.date_of_death %></p>
+<% end %>
+
+<% unless @person.author_of.empty? %>
+<p>Autor:</p>
+<ul>
+  <% @person.author_of.each do |p| %>
+  <li><%= link_to_publication p %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<% unless @person.translator_of.empty? %>
+<p>Tłumacz:</p>
+<ul>
+  <% @person.translator_of.each do |p| %>
+  <li><%= link_to_publication p %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<% unless @person.illustrator_of.empty? %>
+<p>Ilustrator:</p>
+<ul>
+  <% @person.illustrator_of.each do |p| %>
+  <li><%= link_to_publication p %></li>
+  <% end %>
+</ul>
+<% end %>

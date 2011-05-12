@@ -7,28 +7,31 @@
 <p>Data śmierci: <%= @person.date_of_death %></p>
 <% end %>
 
-<% unless @person.author_of.empty? %>
+<% author_of = @person.author_of %>
+<% unless author_of.empty? %>
 <p>Autor:</p>
 <ul>
-  <% @person.author_of.each do |p| %>
+  <% author_of.each do |p| %>
   <li><%= link_to_publication p %></li>
   <% end %>
 </ul>
 <% end %>
 
-<% unless @person.translator_of.empty? %>
+<% translator_of = @person.translator_of %>
+<% unless translator_of.empty? %>
 <p>Tłumacz:</p>
 <ul>
-  <% @person.translator_of.each do |p| %>
+  <% translator_of.each do |p| %>
   <li><%= link_to_publication p %></li>
   <% end %>
 </ul>
 <% end %>
 
-<% unless @person.illustrator_of.empty? %>
+<% illustrator_of = @person.illustrator_of %>
+<% unless illustrator_of.empty? %>
 <p>Ilustrator:</p>
 <ul>
-  <% @person.illustrator_of.each do |p| %>
+  <% illustrator_of.each do |p| %>
   <li><%= link_to_publication p %></li>
   <% end %>
 </ul>

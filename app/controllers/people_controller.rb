@@ -5,6 +5,11 @@ class PeopleController < ApplicationController
     @people = Person.all
   end
 
+  def search
+    @people = Person.full_name_containing [params[:term]], true
+    render :index
+  end
+
   def new
     @person = Person.new
   end

@@ -5,6 +5,7 @@ BookWeb::Application.routes.draw do
   resources :books,     :as => :publications
   resources :people,    :only => [:index, :new, :create, :show] do
     get :autocomplete_person_last_name, :on => :collection
+    get :search, :on => :collection
   end
 
   match '/signup',  :to => 'users#new'

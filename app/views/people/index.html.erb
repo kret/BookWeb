@@ -1,0 +1,12 @@
+<% if @people %>
+<h1>Lista osób</h1>
+
+<ul>
+<% @people.each do |p| %>
+  <li><%= link_to_person p %></li>
+<% end %>
+</ul>
+<% else %>
+<h1>Baza osób jeszcze jest pusta.</h1>
+<p><%= link_to "Dodaj nową osobę", new_person_path %></p>
+<% end %>

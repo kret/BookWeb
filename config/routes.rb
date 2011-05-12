@@ -3,7 +3,7 @@ BookWeb::Application.routes.draw do
   resources :users,     :only => [:new, :create, :show, :index]
   resources :sessions,  :only => [:new, :create, :destroy]
   resources :books,     :as => :publications
-  resources :people,    :only => [:new, :create, :show] do
+  resources :people,    :only => [:index, :new, :create, :show] do
     get :autocomplete_person_last_name, :on => :collection
   end
 

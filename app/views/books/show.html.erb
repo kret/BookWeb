@@ -6,9 +6,9 @@
 	<div class="main-column">
 		<a class="button favorite" title="Dodaj do ulubionych"></a>
 		<h1 class="h"><%= @publication.title %></h1>
-		<h6 class="d"><strong>Autor:</strong> <%= @publication.authors.collect { |a| link_to_person(a) }.join(", ").html_safe unless @publication.authors.empty? %></h6>
+		<h6 class="d"><strong>Autor:</strong> <%= pretty_print @publication.authors unless @publication.authors.empty? %></h6>
 		<div class="description">
-		  <p><%= @publication.most_popular_editions[0].description %></p>
+		  <p><%= @publication.most_popular_editions[0].description if @publication.most_popular_editions[0].description %></p>
 		</div>
 		<% unless @publication.most_popular_editions.empty? %>
 		<h5>Najpopularniejsze wydania</h5>

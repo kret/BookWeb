@@ -18,10 +18,10 @@
 	<dt>Data wydania:</dt><dd><%= edition.edition_date %></dd>
 	<% end %>
   <% unless edition.illustrators.empty? %>
-	<dt>Ilustracje:</dt><dd><%= edition.illustrators.collect { |t| "#{t.first_name} #{t.last_name}" }.join ", " %></dd>
+	<dt>Ilustracje:</dt><dd><%= pretty_print edition.illustrators, :with_links => false %></dd>
 	<% end %>
   <% unless edition.translators.empty? %>
-	<dt>Tłumaczenie:</dt><dd><%= edition.translators.collect { |t| "#{t.first_name} #{t.last_name}" }.join ", " %></dd>
+	<dt>Tłumaczenie:</dt><dd><%= pretty_print edition.translators, :with_links => false %></dd>
 	<% end %>
   <% if edition.dimentions_width && edition.dimentions_height %>
 	<dt>Wymiary:</dt><dd><%= edition.dimentions_width %> x <%= edition.dimentions_height %> mm</dd>

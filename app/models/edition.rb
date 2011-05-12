@@ -53,7 +53,7 @@ class Edition < ActiveRecord::Base
                             :conditions => "contributions.role_id = 2"
   belongs_to :cover,        :class_name => "Picture",
                             :dependent => :destroy
-  has_many :pictures,   :class_name => "Picture",
+  has_many :pictures,       :class_name => "Picture",
                             :autosave => true,
                             :dependent => :destroy
 
@@ -117,13 +117,13 @@ class Edition < ActiveRecord::Base
     end
 
     def make_builds
-      if errors[:tr_ids].empty?
+      if tr_ids && errors[:tr_ids].empty?
         tr_ids.each do |i|
           contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 3 })
         end
       end
 
-      if errors[:il_ids].empty?
+      if il_ids && errors[:il_ids].empty?
         il_ids.each do |i|
           contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 2 })
         end

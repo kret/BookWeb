@@ -71,7 +71,7 @@ class Publication < ActiveRecord::Base
   end
 
   def au_ids=(ids)
-    @au_ids = ids.split(',').collect(&:strip).collect(&:to_i).uniq
+    @au_ids = ids.collect(&:to_i).uniq
   end
 
   protected

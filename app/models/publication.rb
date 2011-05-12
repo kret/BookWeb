@@ -40,8 +40,8 @@ class Publication < ActiveRecord::Base
 
   def authors_other_books(lim=5)
     other_books = {}
-    authors.each do |a|
-      other_books[a] = a.author_of.limit(lim) - [self] if a.author_of.size > 1
+    authors.reject { |a| a.author_of.size <= 1 }.each do |a|
+      other_books[a] = a.author_of.limit(lim) - [self]
     end
     other_books
   end

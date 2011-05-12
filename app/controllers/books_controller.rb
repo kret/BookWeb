@@ -17,7 +17,11 @@ class BooksController < ApplicationController
   end
 
   def create
-    @publication = Publication.new params[:publication]
+    pj = params[:publication].delete :publication_json
+    pub_hash = ActiveSupport::JSON.decode pj
+    pub_hash.merge! params[:publication]
+
+    @publication = Publication.new pub_hash
     if @publication.save
       redirect_to @publication, :notice => t('publication.flash.created_successfully')
     else

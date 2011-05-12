@@ -91,11 +91,11 @@ class Edition < ActiveRecord::Base
   end
 
   def tr_ids=(ids)
-    @tr_ids = ids.split(',').collect(&:strip).collect(&:to_i).uniq
+    @tr_ids = ids.collect(&:to_i).uniq
   end
 
   def il_ids=(ids)
-    @il_ids = ids.split(',').collect(&:strip).collect(&:to_i).uniq
+    @il_ids = ids.collect(&:to_i).uniq
   end
 
   protected

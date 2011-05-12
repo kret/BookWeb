@@ -38,10 +38,10 @@ class Publication < ActiveRecord::Base
     most_popular_editions[0].page_pictures
   end
 
-  def authors_other_books
+  def authors_other_books(lim=5)
     other_books = {}
     authors.each do |a|
-      other_books[a] = a.author_of - [self] if a.author_of.size > 1
+      other_books[a] = a.author_of.limit(lim) - [self] if a.author_of.size > 1
     end
     other_books
   end

@@ -211,6 +211,8 @@ pl:
       less_than_or_equal_to: "musi być mniejsze lub równe %{count}"
       odd: "musi być nieparzyste"
       even: "musi być parzyste"
+      carrierwave_processing_error: "nie mógł być przetworzony."
+      carrierwave_integrity_error: "nie jest obrazem."
 
   activerecord:
     errors:
@@ -227,3 +229,9 @@ pl:
 
       full_messages:
         format: "%{attribute} %{message}"
+
+      models:
+        picture:
+          attributes:
+            image:
+              carrierwave_processing_error: "Błąd przetwarzania obrazu."

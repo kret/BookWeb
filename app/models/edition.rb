@@ -52,6 +52,7 @@ class Edition < ActiveRecord::Base
                             :source => :person,
                             :conditions => "contributions.role_id = 2"
   belongs_to :cover,        :class_name => "Picture",
+                            :autosave => true,
                             :dependent => :destroy
   has_many :pictures,       :class_name => "Picture",
                             :autosave => true,

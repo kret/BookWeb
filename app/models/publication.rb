@@ -56,7 +56,7 @@ class Publication < ActiveRecord::Base
   def new_edition_attributes=(edition_attributes)
     edition_attributes.each do |attributes|
       json = attributes.delete :edition_json
-      attributes.merge! ActiveSupport::JSON.decode json
+      attributes.merge! ActiveSupport::JSON.decode json if json
       editions.build(attributes)
     end
   end

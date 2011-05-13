@@ -17,8 +17,11 @@ class BooksController < ApplicationController
   end
 
   def create
-    pj = params[:publication].delete :publication_json
-    pub_hash = ActiveSupport::JSON.decode pj
+    pub_hash = {}
+    if params[:publication][:publication_json]
+      pj = params[:publication].delete :publication_json
+      pub_hash = ActiveSupport::JSON.decode pj
+    end
     pub_hash.merge! params[:publication]
 
     @publication = Publication.new pub_hash

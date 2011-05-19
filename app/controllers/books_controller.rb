@@ -20,7 +20,7 @@ class BooksController < ApplicationController
     pub_hash = {}
     if params[:publication][:publication_json]
       pj = params[:publication].delete :publication_json
-      pub_hash = ActiveSupport::JSON.decode pj
+      pub_hash = ActiveSupport::JSON.decode pj unless pj.blank?
     end
     pub_hash.merge! params[:publication]
 

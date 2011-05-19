@@ -117,3 +117,5 @@ footer { clear:both; border-top : 1px solid #CCCAC7; padding-top: 5px; margin-to
 	.book-details, .add-column { float: none; }
 	img.cover { width: 320px }
 }
+
+span.field_with_errors input {background-color: #ddeeff;}

@@ -87,7 +87,7 @@ class Publication < ActiveRecord::Base
     end
 
     def make_builds
-      if errors[:au_ids].empty?
+      if au_ids && errors[:au_ids].empty?
         au_ids.each do |i|
           contributions.build({ :person => Person.find(i), :contributable => self, :role_id => 1 })
         end

@@ -28,7 +28,10 @@ class BooksController < ApplicationController
     if @publication.save
       redirect_to @publication, :notice => t('publication.flash.created_successfully')
     else
-      render :new
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render :json => { :status => :invalid, :errors => @publication.errors } }
+      end
     end
   end
 

@@ -8,9 +8,9 @@
       <dt><%= ef.label :edition_date, "Data wydania" %></dt><dd><%= ef.text_field :edition_date %></dd>
       <dt><%= ef.label :original_price, "Cena z okładki" %></dt><dd><%= ef.text_field :original_price %></dd>
       <dt><%= ef.label :isbn, "ISBN" %></dt><dd><%= ef.text_field :isbn %></dd>
-      <dt><label for="illustrator_names">Ilustracje</label></dt><dd><input type="text" id="illustrator_names" name="<%="#{prefix}"%>[il_ids]" /></dd>
+      <dt><label for="illustrator_names">Ilustracje</label></dt><dd><input type="text" id="illustrator_names" name="<%="#{prefix}"%>[il_ids][]" /></dd>
       <div>Ilustratorzy: <span>Adam Kowalski <a class="delete">x</a></span><span>Jan Edam <a class="delete">x</a></span></div>
-      <dt><label for="translator_names">Tłumaczenie</label></dt><dd><input type="text" id="translator_names" name="<%="#{prefix}"%>[tr_ids]" /></dd>
+      <dt><label for="translator_names">Tłumaczenie</label></dt><dd><input type="text" id="translator_names" name="<%="#{prefix}"%>[tr_ids][]" /></dd>
       <div>Tłumacze: </div>
       <dt><%= ef.label :series, "Seria" %></dt><dd><%= ef.text_field :series %></dd>
       <dt><%= ef.label :issue_number, "Tom" %></dt><dd><%= ef.text_field :issue_number %></dd>

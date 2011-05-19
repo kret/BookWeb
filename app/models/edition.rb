@@ -28,12 +28,12 @@ class Edition < ActiveRecord::Base
                   :tr_ids, :il_ids
   attr_reader :tr_ids, :il_ids
 
-  validates :description,   :presence => true
-  validates :isbn,          :presence => true
-  validates :edition_date,  :presence => true
-  validates :tr_ids,        :format => { :with => /(\d+ *,? *)+/ }
+  #validates :description,   :presence => true
+  #validates :isbn,          :presence => true
+  #validates :edition_date,  :presence => true
+  #validates :tr_ids,        :format => { :with => /\[(\d+ *,? *)+\]/ }
   validate :tr_ids,         :valid_tr_ids
-  validates :il_ids,        :format => { :with => /(\d+ *,? *)+/ }
+  #validates :il_ids,        :format => { :with => /\[(\d+ *,? *)+\]/ }
   validate :il_ids,         :valid_il_ids
 
   after_validation :make_builds

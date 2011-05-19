@@ -13,9 +13,9 @@ class Publication < ActiveRecord::Base
   attr_accessible :title, :original_title, :new_edition_attributes, :existing_edition_attributes, :au_ids
   attr_reader :au_ids
 
-  validates :title,   :presence => true
-  validates :au_ids,  :presence => true,
-                      :format => { :with => /(\d+ *,? *)+/ }
+  #validates :title,   :presence => true
+  #validates :au_ids,  :presence => true,
+  #                    :format => { :with => /\[(\d+ *,? *)+\]/ }
   validate :au_ids,   :valid_au_ids
 
   after_validation :make_builds

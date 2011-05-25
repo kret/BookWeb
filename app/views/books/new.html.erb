@@ -1,26 +1,26 @@
 <% content_for :head do %>
-  <%= stylesheet_link_tag "book-add", "jquery-ui-1.8.11.custom", "ui.fileUpload" %>
+  <%= stylesheet_link_tag "jquery-ui-1.8.11.custom", "book-add", "ui.fileUpload" %>
 <% end %>
 
 <% content_for :scripts do %>
   <%= javascript_include_tag :jquery_ui %>
 <% end %>
 
+<div class="info">
+	<h6>Dodaj nową książkę</h6>
+	<div>
+	  Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Sed lacus dui, plac. 
+	  Porttitor a, tincidunt ut purus. Pellent es que ut ullamcorper turpis. In hac ha btasse platea dictumst. Nam mollis magna at aug ue viverra nec sollicitu din neque molestie. Aliquam fermen.
+	</div>
+</div>
 <%= form_for(@publication, :html => { :multipart => true }) do |pf| %>
   <div>
 		<div id="publication-details">
-    <%= pf.label :title, "Tytuł" %><%= pf.text_field :title %>
+    <%= pf.label :title, "Tytuł" %><%= pf.text_field :title, :required => true %>
     <%= pf.label :original_title, "Tytuł oryginału" %><%= pf.text_field :original_title %>
-    <%#label for="a">Autorzy</label><input type="text" id="a" /> <%= link_to "Nowy", nil, :id => "person-add" %>
-    <label for="a">Autorzy</label><input type="text" name="publication[au_ids][]" /> <%= link_to "Nowy", nil, :id => "person-add" %>
+    <label for="a">Autorzy</label><input type="text" class="publication_au_ids" id="a" /> <%= link_to "Nowy", nil, :id => "person-add" %> <%# name="publication[au_ids][]" %>
 
-    <div id="publication-author-details">
-      <ul>
-        <li>Jan Edam <a class="delete">x</a></li>
-        <li>Celina Cabacka <a class="delete">x</a></li>
-        <li>Anna Abacka <a class="delete">x</a></li>
-      <ul>
-    </div>
+    <div id="publication-author-details"></div>
 
     <div title="Dodaj nową osobę" id="dialog">
       <%#= form_for :person, :url => people_path, :format => :json, :remote => true do |af| % >
@@ -89,11 +89,11 @@ jQuery('#person-add').click(function() {
 });
 
 $(function() {
-  function log( message ) {
-    if (!jQuery("#publication-author-details-list")[0])
-      jQuery("#publication-author-details").html('<ul id="publication-author-details-list"></ul>');
-    $( "<li>" + message + '<a class="button">x</a></li>' ).appendTo( "#publication-author-details-list" );
-  }
+	function log( message, id ) {
+		if (!jQuery("#publication-author-details-list")[0])
+			jQuery("#publication-author-details").html('<ul id=publication-author-details-list></ul>');
+		$( "<li id=author-"+id+">" + message + '<a class=delete>x</a></li>' ).appendTo( "#publication-author-details-list" );
+	}
 
   $( "#a" ).autocomplete({
     source: function( request, response ) {
@@ -117,7 +117,7 @@ $(function() {
     select: function( event, ui ) {
       log( ui.item ?
         ui.item.label :
-        "Nothing selected, input was " + this.value);
+				"Nothing selected, input was " + this.value, ui.item.id);
     },
     open: function() {
       $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
@@ -128,6 +128,7 @@ $(function() {
   });
 });
     </script>
+    <input type="submit" />
   </div>
 
   <div style="width: 220px; margin: 0px 10px; float:left">
@@ -138,14 +139,251 @@ $(function() {
     <input type="submit" />
   </div>
 
-  <div style="clear: both; padding-top: 50px; border-top: 1px solid Silver">
-
+  <div class="edition-zone">
     <%= render :partial => 'edition', :collection => @publication.editions %>
-
-    <div style="clear: both;">
-      <%= pf.submit "+ Kolejne wydanie" %>
-      <%= pf.submit "Zapisz książkę i wydania" %>
-      <%= pf.submit "Zapisz książkę bez wydania" %>
-    </div>
   </div>
+
+  <div class="buttons">
+    <%= pf.submit "+ Kolejne wydanie", :id => "add" %>
+    <%= pf.submit "Zapisz książkę i wydania" %>
+    <%= pf.submit "Zapisz książkę bez wydania" %>
+    <a id="go-go">Zapisz książkę bez wydania</a>
+    <a id="go-go-all">Zapisz książkę bez wydania</a>
+  </div>
+
+  	<script>
+  		var content = jQuery('#edition-1').html(),
+  			i = 1;
+  		jQuery('#add').click(function() {
+  			var parent = jQuery('#edition-1').parent();
+  			i++;
+  			parent.append('<div id=edition-'+i+' class=edition>' + content + '</div>')
+
+  			jQuery('#edition-'+i+' .tabs').tabs();
+  			jQuery('#edition-'+i+' #file-upload').fileUpload({ fallback : 'file-upload-fallback', max : 8, name: 'datafile[]' });
+  		})
+
+  		jQuery('#edition-1 .tabs').tabs();
+  		jQuery('#edition-1 #file-upload').fileUpload({ 
+  			//fallback : '.file-upload-fallback',
+  			max : 8,
+  			name: 'datafile[]' 
+  		});
+
+
+
+  	$('#go-go').bind('click', function() {
+  			var authors = [];
+  			$('#publication-author-details-list li').each(function() {
+  				authors.push(this.id.replace('author-', ''));
+  			})
+
+  			var books = {
+  				publication : {
+  					title : $('#publication_title').val(),
+  					original_title : $('#publication_original_title').val(),
+  					au_ids : authors
+  				}
+  			};
+  			console.log(books)
+
+  			$.ajax({
+  						type: 'POST',
+  						url: '/books/',
+  						data: books,
+  						success: function( data ,x, y,z ) {
+  					  		console.log('success',x,y,z);
+  					  	},
+  					  	error: function(e,x,y,z) {
+  					  		console.log('error',e,x,y,z);
+  					  	}
+  			});
+
+
+  	})
+  	$('#go-go-all').bind('click', function() {
+  			var authors = [];
+  			$('#publication-author-details-list li').each(function() {
+  				authors.push(this.id.replace('author-', ''));
+  			})
+
+  			var books = {
+  				publication : {
+  					title : $('#publication_title').val(),
+  					original_title : $('#publication_original_title').val(),
+  					au_ids : authors
+  				},
+  				publication1 : {
+
+  							edition_date: '2000-07-06',
+  							description : 'Aaa. Aaa.',
+  							pictures : []
+
+  				}
+  			};
+  			console.log(books)
+  //			publication[new_edition_attributes][][edition_date]
+
+  // --
+  				/*
+  					function addFile( _file ) {
+  						var _varName = 'datafile[]';
+  						return  boundary +'\r\nContent-Disposition: form-data; name="' + _varName + '"; filename="' + _file.name + '"\r\nContent-Type: ' + _file.type + '\r\n\r\n' + _file + '\r\n--' ;							
+  					};
+
+  					var boundary 	= generateBoundary(15);
+  						xhr 		= new XMLHttpRequest(),
+  						requestData = '';
+
+  					var prev = requestData;
+  					$.each(_files, function ( i, file ) {
+  						if(!file.doNotSend)
+  							requestData += addFile(file)
+  					});
+  					if(prev !== requestData) {
+  						xhr.open('POST', '/upload');
+  						xhr.onreadystatechange = function(e) {
+
+  							//console.log('-- XHR onreadystatechange', e, this.readyState);
+  							if ( 4 == this.readyState ) {
+  								//console.log(['xhr upload complete', e]);
+  								var t = this.responseText;
+  								//console.log(['Upload complete', t]);
+  								//imageUploaded(this.file, t);
+  							}
+  						};    						
+  						xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary="+boundary);
+  						xhr.send ('--' + requestData + boundary + '--');
+  					}
+  					*/
+
+  //------
+  					function generateBoundary( _length )
+  					{
+  						var text = "", 
+  							possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  						for( var i=0; i < _length; i++ )
+  							text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  						return text;
+  					};
+  var boundary 	= '---------------------------' + generateBoundary(15);
+  var xhr 		= new XMLHttpRequest();
+
+  var files = jQuery('#edition-1 #file-upload').fileUpload('getFiles');
+
+
+
+  		var ready = function() {
+  				if (requestLeft === 0) {
+  						xhr.open('POST', '/books/');
+  						xhr.onreadystatechange = function(e) {
+
+
+  						};    						
+  						xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary="+boundary);
+
+
+  						//var a = data.length;
+
+  						//data = 	
+  						//	"Content-Type: "+ "multipart/form-data; boundary=" + boundary + '\r\n\r\n' +
+  						//	data
+
+  						xhr.send (data + boundary + '--');
+
+  				} else console.log('requestLeft:', requestLeft) 
+  		}
+  var _utf = jQuery('#aaaaaa').val();
+  	var data = 
+  		'--' + 
+  		boundary 
+
+  		+'\r\nContent-Disposition: form-data; name="utf8"\r\n\r\n' +
+  		_utf + '\r\n--' + boundary
+
+  		+'\r\nContent-Disposition: form-data; name="authenticity_token"\r\n\r\n' + 
+  		'aKBkQ1tEMGL9d2wgjZ8ali6sOLMZkT5WqekwGgQmuQU=\r\n--' + boundary
+
+  		+'\r\nContent-Disposition: form-data; name="publication[publication_json]"\r\n\r\n'
+  		+ JSON.stringify(books.publication)  
+  		+ '\r\n--' +
+
+  		boundary +'\r\nContent-Disposition: form-data; name="publication[new_edition_attributes][][edition_json]"\r\n\r\n'
+  		+ JSON.stringify(books.publication1) 
+  		+ '\r\n--' ;
+
+
+  		var requestLeft = 0;
+
+  		$.each(files, function ( i, file ) {
+  				console.log('przelot', i, file, requestLeft)
+
+  				var reader = new FileReader();
+  				reader.file = file;
+  				reader.readAsBinaryString(file);
+  				//reader.readAsText(file);
+  				//reader.readAsDataURL(file);
+  				requestLeft++;
+  				reader.onloadend = function() {
+  						requestLeft--;
+  						data +=		
+  							boundary + '\r\n' + 
+  							'Content-Disposition: form-data; '+
+  								'name="publication[new_edition_attributes][][cover_attributes][image]"; '+
+  								'filename="' + file.name + '"'+
+  							'\r\n' +
+  							'Content-Type: ' + file.type + 
+  							'\r\n\r\n' +
+  							window.btoa(reader.result) + 
+  							'\r\n--' ;
+  	//						this.result + '\r\n--' ;
+  						ready();
+  				}
+  		});
+
+  // ---
+  /*
+  var files = jQuery('#edition-1 #file-upload').fileUpload('getFiles');
+
+
+  var requestLeft = 0;
+  		$.each(files, function ( i, file ) {
+  			requestLeft++;
+  				var fr = new FileReader();
+  				//  fr.file = file;
+  				fr.onload = function(e) {
+  					requestLeft--;
+
+  					books.publication1.pictures.push(
+  						{
+  							title : file.fileName,
+  							blob : this.result
+  						}
+  					)
+
+  					ready();
+  				}
+  				fr.readAsDataURL(file);
+  		});
+  		var ready = function() {
+  			if (requestLeft === 0) {
+  			$.ajax({
+  						type: 'POST',
+  						url: '/books/',
+  						data: books,
+  						success: function( data ,x, y,z ) {
+  					  		console.log('success',x,y,z);
+  					  	},
+  					  	error: function(e,x,y,z) {
+  					  		console.log('error',e,x,y,z);
+  					  	}
+  			});
+  			}
+  		}		
+  	*/		
+  // --
+  	})
+</script>
 <% end %>

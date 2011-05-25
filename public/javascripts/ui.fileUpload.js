@@ -18,58 +18,55 @@
 		//  http://en.wikipedia.org/wiki/MIME
 		//! http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html
 
-(function( $ ){					
+(function( $, undefined ){					
 	view = {
-		/** 
-		 * All DOM elements
-		 */
-		DOM : {
-			component	: null,
-			fallback	: null,
-			thumbnails	: null
+		init : function() {
+			return this.each(function() {		
+				$this = $(this);
+					
+				// TODO fallback
+				//
+			
+				// draw fancy file upload
+				$this.append(
+					'<div id=drop-target>' +
+						'<div class="help">Tu przeciągnij<br />pliki<br />z systemu</div>' +
+					'</div>' +
+					'<div id=thumbnails class=thumbnails></div>'
+				);
+
+				//remember all important DOM related stuff for future
+				$this.data('DOM', { 
+					component : 	$this,
+					fallback :		$('.fallback', $this),
+					thumbnails :	$('.thumbnails', $this)
+				});
+
+				$('#drop-target', $this.data('DOM').component)
+					//remember parent component DOM element
+					.data('component', $this)
+					// bind logic
+					.bind('dragenter.fileupload',controller.stopDefaultBehavior )
+					.bind('dragover.fileupload', controller.stopDefaultBehavior )
+					.bind('drop.fileupload', function(e) {controller.drop(e, $(this).data('component'))} );
+				
+			})
 		},
 		
-		init : function() {
-			view.DOM.fallback	= jQuery('#' + this.data('fileUpload').fallback);
-			view.DOM.component	= this;
-
-			console.log('UI', 'fileUpload -- view initialization', 
-				'componentDOM:', view.DOM.component, 
-				'fallbackDOM:', view.DOM.fallback);
-			
-			// make _fallback less visible
-			//
-			
-			// draw fancy file upload
-			view.DOM.component.append(
-				'<div id=drop-target>' +
-					'<div class="help">Tu przeciągnij<br />pliki<br />z systemu</div>' +
-				'</div>' +
-				'<div id=thumbnails></div>' +
-				'<a id=ok>Tak, te pliki chcę wysłać na serwer</a>'
-			)
-			
-			// bind logic
-			$('#drop-target').bind('dragenter',controller.stopDefaultBehavior)
-				.bind('dragover', controller.stopDefaultBehavior)
-				.bind('drop', controller.drop);
-			jQuery('#ok').click(controller.send);
-			
-			
-			return this;
-		},
-		showThumbnail : function( file, number ) {
-			
+		showThumbnail : function( file, number, $this ) {
+				
 				console.log('NYI', 'showThumbnail')
 				var title = file.fileName;
 				var img = jQuery('<div id='+ 'img_' + parseInt(Math.random()*999999999999)
 					+ ' title=' + title + ' class="img"><h4>'+title+'</h4></div>'
 				);
-				$('#thumbnails').append(img);
-				$(img).click(function(event) {controller.markAsBad(number); $(this).toggleClass('border')})
+				
+				$this.data('DOM').thumbnails.append(img);
+				$(img).click(function() {controller.markAsBad(number); $(this).toggleClass('border')})
 				var fr = new FileReader();
 				//  fr.file = file;
 				fr.onload = function(e) {
+					
 					//console.log(['FileReader onload', e]);
 					img.css('background-image', "url('" + this.result + "')");
 					//file.unid = showThumbnail(this.result, this.file.fileName);
@@ -133,7 +130,7 @@
 					
 					function addFile( _file ) {
 						var _varName = 'datafile[]';
-						return  boundary +'\r\nContent-Disposition: form-data; name="' + _varName + '"; filename="' + _file.name + '"\r\nContent-Type: ' + _file.type + '\r\n\r\n' + _file + '\r\n--' ;							
+						return  boundary +'\r\nContent-Disposition: form-data; name="' + _varName + '"; filename="' + _file.name + '"\r\nContent-Type: ' + _file.type + '\r\n\r\n' + _file.getAsBinary() + '\r\n--' ;							
 					};
 					
 					var boundary 	= generateBoundary(15);
@@ -158,13 +155,13 @@
 							}
 						};    						
 						xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary="+boundary);
-						xhr.send ('--' + requestData + boundary + '--');
+						xhr.sendAsBinary ('--' + requestData + boundary + '--');
 					}
 			};
 		
 		},
 
-		drop : function(event) {
+		drop : function(event, $this) {
 			controller.stopDefaultBehavior(event)
 
 			var left = controller.max - controller.files.length,
@@ -173,16 +170,26 @@
 			// because <FileList> Object is read only http://www.w3.org/TR/FileAPI/#dfn-filelist
 			for (var i = 0, l = numberOfFilesToBeUploaded; i < l; i++) {
 				controller.files.push(event.originalEvent.dataTransfer.files[i]);
-				view.showThumbnail(event.originalEvent.dataTransfer.files[i], controller.files.length-1)
+				view.showThumbnail(event.originalEvent.dataTransfer.files[i], controller.files.length-1, $this)
 			}
 			console.log('a', controller.files)
 			
+		},
+		
+		getFiles : function() {
+			var _files = controller.files;
+			//controller.files = new Array();
+			//view.clearThumbnails();
+			console.log(_files)
+			
+			return _files;
+		
 		}
 	};
 
 	$.fn.fileUpload = function( method ) {
-		//if ( controller[method] ) {
-		//	return controller[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		if ( controller[method] )// {
+			return controller[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
 		//} else 
 		//if ( typeof method === 'object' || ! method ) {
 			console.log('UI', 'fileUpload', this, arguments)

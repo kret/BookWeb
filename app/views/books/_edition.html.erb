@@ -1,46 +1,51 @@
 <% prefix = "publication[#{edition.new_record? ? 'new' : 'existing'}_edition_attributes][]" %>
 
 <%= fields_for prefix, edition do |ef| %>
-  <div id="edition-details">
-    <h1>Wydanie</h1>
-    <dl>
-      <dt><label for="editor_name">Wydawnictwo</label></dt><dd><input type="text" id="editor_name" /></dd>
-      <dt><%= ef.label :edition_date, "Data wydania" %></dt><dd><%= ef.text_field :edition_date %></dd>
-      <dt><%= ef.label :original_price, "Cena z okładki" %></dt><dd><%= ef.text_field :original_price %></dd>
-      <dt><%= ef.label :isbn, "ISBN" %></dt><dd><%= ef.text_field :isbn %></dd>
-      <dt><label for="illustrator_names">Ilustracje</label></dt><dd><input type="text" id="illustrator_names" name="<%="#{prefix}"%>[il_ids][]" /></dd>
-      <div>Ilustratorzy: <span>Adam Kowalski <a class="delete">x</a></span><span>Jan Edam <a class="delete">x</a></span></div>
-      <dt><label for="translator_names">Tłumaczenie</label></dt><dd><input type="text" id="translator_names" name="<%="#{prefix}"%>[tr_ids][]" /></dd>
-      <div>Tłumacze: </div>
-      <dt><%= ef.label :series, "Seria" %></dt><dd><%= ef.text_field :series %></dd>
-      <dt><%= ef.label :issue_number, "Tom" %></dt><dd><%= ef.text_field :issue_number %></dd>
-      <dt><%= ef.label :cover_type, "Oprawa" %></dt><dd><%= ef.text_field :cover_type %></dd>
-      <dt><%= ef.label :page_count, "Liczba stron" %></dt><dd><%= ef.text_field :page_count %></dd>
-      <dt><label>Wymiary</label></dt><dd><%= ef.text_field :dimentions_width, :class => "dim-x" %>x<%= ef.text_field :dimentions_height, :class => "dim-y" %>mm</dd>
-    </dl>
-  </div>
-  <div style="width: 620px; padding: 0; border: none; margin: 0px 10px; float:left" id="tabs">
-    <ul>
-      <li><a href="#file-upload">Foto</a></li>
-      <li><a href="#tabs-2">Opis</a></li>
-    </ul>
-    <div id="file-upload">
-      <div id="file-upload-fallback">
-      </div>
-      <script>
-        jQuery('#file-upload').fileUpload({ fallback: 'file-upload-fallback', max: 8, name: '<%= "#{prefix}" %>[new_pictures_attributes][][image]' });
-      </script>
-      <%= file_field_tag "#{prefix}[cover_attributes][image]", :style => "border: 1px solid black" %>
-      <%= file_field_tag "#{prefix}[new_pictures_attributes][][image]" %>
-      <%= file_field_tag "#{prefix}[new_pictures_attributes][][image]" %>
-    </div>
-    <div id="tabs-2">
-      <h1>Opis</h1>
-      <%= ef.label :description, "Opis" %><br>
-      <%= ef.text_area :description, :size => "60x15" %>
-    </div>
-  </div>
-  <script>
-    jQuery('#tabs').tabs();
-  </script>
+  <div id="edition-1" class="edition">
+    <div class="edition-details">
+			<div class="info">
+				<h6>Dodaj szczegóły wydania</h6>
+				<div>
+				  Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Sed lacus dui, plac.	
+				</div>
+			</div>
+      <dl>
+        <dt><label for="editor_name">Wydawnictwo</label></dt><dd><input type="text" id="editor_name" /></dd>
+        <dt><%= ef.label :edition_date, "Data wydania" %></dt><dd><%= ef.text_field :edition_date, :type => "date" %></dd>
+        <dt><%= ef.label :original_price, "Cena z okładki" %></dt><dd><%= ef.text_field :original_price %></dd>
+        <dt><%= ef.label :isbn, "ISBN" %></dt><dd><%= ef.text_field :isbn %></dd>
+        <dt><label for="illustrator_names">Ilustracje</label></dt><dd><input type="text" id="illustrator_names" name="<%="#{prefix}"%>[il_ids][]" /></dd>
+        <div>Ilustratorzy: <span>Adam Kowalski <a class="delete">x</a></span><span>Jan Edam <a class="delete">x</a></span></div>
+        <dt><label for="translator_names">Tłumaczenie</label></dt><dd><input type="text" id="translator_names" name="<%="#{prefix}"%>[tr_ids][]" /></dd>
+        <div>Tłumacze: </div>
+        <dt><%= ef.label :series, "Seria" %></dt><dd><%= ef.text_field :series %></dd>
+        <dt><%= ef.label :issue_number, "Tom" %></dt><dd><%= ef.text_field :issue_number %></dd>
+        <dt><%= ef.label :cover_type, "Oprawa" %></dt><dd><%= ef.text_field :cover_type %></dd>
+        <dt><%= ef.label :page_count, "Liczba stron" %></dt><dd><%= ef.text_field :page_count %></dd>
+        <dt><label>Wymiary</label></dt><dd><%= ef.text_field :dimentions_width, :class => "dim-x" %>x<%= ef.text_field :dimentions_height, :class => "dim-y" %>mm</dd>
+      </dl>
+		</div>
+		<div class="tabs">
+			<ul>
+				<li><a href="#file-upload">Foto</a></li>
+				<li><a href="#description">Opis</a></li>
+			</ul>
+			<div id="file-upload">
+				<!--
+					<div class="file-upload-fallback">
+					</div>
+				-->
+			</div>
+			<div id="description">
+				<div class="info">
+					<h6>Dodaj opis z tylnej okładki</h6>
+				</div>
+        <%= ef.text_area :description, :size => "80x14" %>
+			</div>
+		</div>
+	</div>
+
+  <%#= file_field_tag "#{prefix}[cover_attributes][image]", :style => "border: 1px solid black" %>
+  <%#= file_field_tag "#{prefix}[new_pictures_attributes][][image]" %>
+  <%#= file_field_tag "#{prefix}[new_pictures_attributes][][image]" %>
 <% end %>

@@ -13,10 +13,9 @@
 	margin-left: 10px;
 }
 #publication-details #publication-author-details {
-	background-color: #EEEEEE;
 	margin-left: 109px;
-	width: 194px;
-	padding: 5px 0 5px 10px;
+	width: 204px;
+	padding: 0px 0 5px 0px;
 }
 
 #publication-details #publication-author-details ul {
@@ -24,43 +23,57 @@
 	list-style: none;
 	padding: 0;
 }
+#publication-details #publication-author-details li {
+	margin: 2px 0;
+	border-radius: 6px;
+	border: 1px solid #DCDCDC;
+	padding: 4px 8px 4px 12px;
+	background: #EEEEEE url('images/grip.png') 2px 4px no-repeat;
+}
 
 #publication-author-details-list {
 	list-style: none;
 }
 
 
-#edition-details {
+.edition-details {
 	width: 300px;
 	margin: 0px 10px;
 	float:left
 }
-#edition-details dt {
+.edition-details dt {
 	float: left;
 	clear: left;
 	width: 100px;
 	text-align: right;
 }
-#edition-details dd {
+.edition-details dd {
 	float: left;
 }
-#edition-details input {
+.edition-details input {
 	width: 150px;
 }
-#edition-details input.dim-x {
+.edition-details input.dim-x {
 	width: 50px;
 	margin: 0 5px 0 0;
 }
-#edition-details input.dim-y {
+.edition-details input.dim-y {
 	width: 50px;
 	margin: 0px 5px;
 }
 .delete {
-	color: white;
+/*	color: white;
 	background-color: Silver;
 	border-radius: 6px;
 	text-align: center;
 	line-height: 8px; height: 12px; width: 12px; display: inline-block;
 	font-size: 12px;
 	margin: 0px 10px 0px 2px;
+*/	float: right;
+}
+.buttons {
+	clear: both;
+}
+.tabs {
+	width: 620px; padding: 0; border: none; margin: 0px 10px; float:left;
 }
